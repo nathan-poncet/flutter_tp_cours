@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tp_cours/src/constants/app_sizes.dart';
 import 'package:tp_cours/src/constants/paddings.dart';
 import 'package:tp_cours/src/features/properties/data/property.dart';
 import 'package:tp_cours/src/features/properties/presentation/property_card.dart';
@@ -21,6 +22,36 @@ class PropertiesScreen extends StatelessWidget {
     const Tab(text: "Toundra", icon: Icon(Icons.location_city)),
     const Tab(text: "Volcan", icon: Icon(Icons.landscape)),
     const Tab(text: "Zénith", icon: Icon(Icons.beach_access)),
+  ];
+
+  final properties = [
+    Property(
+      city: 'Paris',
+      country: 'France',
+      date: '01/01/2022',
+      imageUrl: 'https://a0.muscache.com/im/pictures/66631724/e2bb580b_original.jpg?im_w=1200',
+      isFavorite: false,
+      pricePerNight: 140,
+      rate: 4.5,
+    ),
+    Property(
+      city: 'Lyon',
+      country: 'France',
+      date: '01/01/2022',
+      imageUrl: 'https://a0.muscache.com/im/pictures/6721fc25-afe0-4f35-b181-212ec8ddc186.jpg?im_w=720',
+      isFavorite: false,
+      pricePerNight: 110,
+      rate: 4.5,
+    ),
+    Property(
+      city: 'Marseille',
+      country: 'France',
+      date: '01/01/2022',
+      imageUrl: 'https://a0.muscache.com/im/pictures/miso/Hosting-5264493/original/10d2c21f-84c2-46c5-b20b-b51d1c2c971a.jpeg?im_w=720',
+      isFavorite: false,
+      pricePerNight: 80,
+      rate: 4.5,
+    ),
   ];
 
   @override
@@ -48,20 +79,12 @@ class PropertiesScreen extends StatelessWidget {
             ]),
         body: Padding(
           padding: Paddings.page,
-          child: ListView.builder(
-            itemCount: 1,
+          child: ListView.separated(
+            itemCount: properties.length,
             itemBuilder: (context, index) {
-              return PropertyCard(
-                  property: Property(
-                city: 'Paris',
-                country: 'France',
-                date: '01/01/2022',
-                imageUrl: 'https://a0.muscache.com/im/pictures/66631724/e2bb580b_original.jpg?im_w=1200',
-                isFavorite: false,
-                pricePerNight: 100,
-                rate: 4.5,
-              ));
+              return PropertyCard(property: properties[index]);
             },
+            separatorBuilder: (context, index) => const SizedBox(height: Sizes.p26),
           ),
         ),
       ),
