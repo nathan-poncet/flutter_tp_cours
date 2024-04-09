@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tp_cours/src/constants/app_sizes.dart';
 import 'package:tp_cours/src/constants/paddings.dart';
+import 'package:tp_cours/src/features/auth/presentation/auth_screen.dart';
+import 'package:tp_cours/src/features/auth/repository/auth_repository.dart';
 import 'package:tp_cours/src/features/properties/data/property.dart';
 import 'package:tp_cours/src/features/properties/presentation/property_card.dart';
 
-class PropertiesScreen extends StatelessWidget {
-  PropertiesScreen({super.key});
+class HomeScreen extends StatelessWidget {
+  HomeScreen({super.key});
 
   final tabs = [
     const Tab(text: "Campagne", icon: Icon(Icons.landscape)),
@@ -72,10 +75,19 @@ class PropertiesScreen extends StatelessWidget {
               ),
             ),
             actions: [
-              IconButton(
-                icon: const Icon(Icons.person),
-                onPressed: () {},
-              ),
+              Consumer<AuthRepositoryProvider>(builder: (context, authRepositoryProvider, child) {
+                final isLoggin = authRepositoryProvider.user != null;
+                return IconButton(
+                  icon: Icon(isLoggin ? Icons.account_circle_outlined : Icons.login),
+                  onPressed: () {
+                    if (isLoggin) {
+                       Navigator.of(context).pushNamed('/account');
+                    } else {
+                      showModalBottomSheet(context: context, builder: (context) => const AuthScreen());
+                    }
+                  },
+                );
+              }),
             ]),
         body: Padding(
           padding: Paddings.page,

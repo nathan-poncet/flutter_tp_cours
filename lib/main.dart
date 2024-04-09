@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:tp_cours/src/features/properties/presentation/properties_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:tp_cours/src/features/auth/presentation/auth_account_screen.dart';
+import 'package:tp_cours/src/features/auth/repository/auth_repository.dart';
+import 'package:tp_cours/src/features/home/presentation/home_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => AuthRepositoryProvider()),
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -13,6 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -32,7 +41,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.pinkAccent),
         useMaterial3: true,
       ),
-      home: PropertiesScreen(),
+      routes: {
+        '/': (context) => HomeScreen(),
+        '/account': (context) => const AuthAccountScreen(),
+      },
     );
   }
 }
